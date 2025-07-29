@@ -16,21 +16,25 @@ require("scratch").setup()
 
 ### **Using [lazy.nvim](https://github.com/folke/lazy.nvim)**
 
+```lua
 {  
     "coldpatch/scratch.nvim",  
     config = function()  
         require("scratch").setup()  
     end,  
 }
+```
 
 ### **Using [packer.nvim](https://github.com/wbthomason/packer.nvim)**
 
+```lua
 use {  
     "coldpatch/scratch.nvim",  
     config = function()  
         require("scratch").setup()  
     end  
 }
+```
 
 ## **Requirements**
 
@@ -39,6 +43,7 @@ use {
 ## **Configuration**
 
 You can configure the plugin by passing a table to the setup function. Here are the default settings:  
+```lua
 require("scratch").setup({  
     -- The command to use for opening the scratchpad window.  
     -- e.g., 'edit', 'split', 'vsplit', 'tabnew'  
@@ -60,6 +65,7 @@ require("scratch").setup({
         global_path = vim.fn.stdpath("data") .. "/scratchpad",  
     }  
 })
+```
 
 ## **Usage**
 
@@ -72,12 +78,19 @@ require("scratch").setup({
 ### **Key Mappings**
 
 You can create your own key mappings for convenience:  
+
+```lua
 -- Open daily scratchpad  
 vim.keymap.set("n", "<leader>sd", "<cmd>Scratch<cr>", { desc = "Open daily scratchpad" })
+```
 
+```lua
 -- Open weekly scratchpad  
 vim.keymap.set("n", "<leader>sw", "<cmd>ScratchWeekly<cr>", { desc = "Open weekly scratchpad" })
+```
 
+```lua
 -- Open monthly scratchpad  
 vim.keymap.set("n", "<leader>sm", "<cmd>ScratchMonthly<cr>", { desc = "Open monthly scratchpad" })  
+```
 
