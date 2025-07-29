@@ -1,0 +1,104 @@
+*scratch.txt* A simple daily, weekly, and monthly scratchpad for Neovim
+
+Author: coldpatch
+Version: 1.0.0
+
+==============================================================================
+CONTENTS                                                 *scratch-contents*
+
+1. Introduction                                       |scratch-introduction|
+2. Requirements                                       |scratch-requirements|
+3. Installation                                       |scratch-installation|
+4. Configuration                                      |scratch-configuration|
+5. Usage                                                      |scratch-usage|
+6. License                                                    |scratch-license|
+
+==============================================================================
+1. INTRODUCTION                                       *scratch-introduction*
+
+scratch.nvim provides a quick and easy way to open daily, weekly, and
+monthly scratchpads. It's designed to be simple, with flexible storage
+options that allow you to keep notes specific to your current project or in a
+single global location.
+
+==============================================================================
+2. REQUIREMENTS                                       *scratch-requirements*
+
+- Neovim >= 0.7.0
+
+==============================================================================
+3. INSTALLATION                                       *scratch-installation*
+
+Using lazy.nvim: >
+    {
+        "your-username/scratch.nvim",
+        config = function()
+            require("scratch").setup()
+        end,
+    }
+<
+Using packer.nvim: >
+    use {
+        "your-username/scratch.nvim",
+        config = function()
+            require("scratch").setup()
+        end
+    }
+<
+
+==============================================================================
+4. CONFIGURATION                                      *scratch-configuration*
+
+Default configuration: >
+    require("scratch").setup({
+        open_command = "edit",
+        file_extension = "md",
+        storage = {
+            use_workspace = true,
+            workspace_subdir = ".scratchpad",
+            global_path = vim.fn.stdpath("data") .. "/scratchpad",
+        }
+    })
+<
+
+Configuration options:
+
+*open_command* (string, default: "edit")
+  The command used to open the scratchpad window (e.g., 'edit', 'split').
+
+*file_extension* (string, default: "md")
+  The file extension for note files.
+
+*storage.use_workspace* (boolean, default: true)
+  If true, stores notes in a subdirectory of the current project.
+  If false, uses the `global_path`.
+
+*storage.workspace_subdir* (string, default: ".scratchpad")
+  The name of the directory for workspace notes.
+
+*storage.global_path* (string)
+  The absolute path for storing global notes.
+
+==============================================================================
+5. USAGE                                                      *scratch-usage*
+
+Commands:
+
+:Scratch                                                            *:Scratch*
+  Opens the scratchpad for the current day.
+
+:ScratchWeekly                                                  *:ScratchWeekly*
+  Opens the scratchpad for the current week (e.g., 2025-W31.md).
+
+:ScratchMonthly                                                *:ScratchMonthly*
+  Opens the scratchpad for the current month (e.g., 2025-07.md).
+
+Example key mappings: >
+    vim.keymap.set("n", "<leader>sd", "<cmd>Scratch<cr>")
+    vim.keymap.set("n", "<leader>sw", "<cmd>ScratchWeekly<cr>")
+    vim.keymap.set("n", "<leader>sm", "<cmd>ScratchMonthly<cr>")
+<
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:
+
