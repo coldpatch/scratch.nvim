@@ -40,7 +40,7 @@ local function open_note(period_type, date_string, header_text)
   end
 
   vim.cmd(string.format("%s %s", config.open_command, fn.fnameescape(filepath)))
-  api.nvim_set_option_value("filetype", "markdown", { win = 0 })
+  api.nvim_set_option_value("filetype", "markdown", { buf = 0 })
 
   if api.nvim_buf_line_count(0) == 1 and api.nvim_buf_get_lines(0, 0, 1, false)[1] == "" then
     api.nvim_buf_set_lines(0, 0, 0, false, { header_text, "" })
