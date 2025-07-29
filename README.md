@@ -82,14 +82,10 @@ You can create your own key mappings for convenience:
 ```lua
 -- Open daily scratchpad  
 vim.keymap.set("n", "<leader>sd", "<cmd>Scratch<cr>", { desc = "Open daily scratchpad" })
-```
 
-```lua
 -- Open weekly scratchpad  
 vim.keymap.set("n", "<leader>sw", "<cmd>ScratchWeekly<cr>", { desc = "Open weekly scratchpad" })
-```
 
-```lua
 -- Open monthly scratchpad  
 vim.keymap.set("n", "<leader>sm", "<cmd>ScratchMonthly<cr>", { desc = "Open monthly scratchpad" })  
 ```
