@@ -1,6 +1,6 @@
 # scratch.nvim
 
-A simple and flexible daily, weekly, and monthly scratchpad for Neovim that can be workspace-specific or global.
+A simple and flexible temporary, daily, weekly, and monthly scratchpad for Neovim that can be workspace-specific or global. Supports both floating windows and traditional split modes.
 
 ## Installation
 
@@ -45,9 +45,17 @@ use {
 You can configure the plugin by passing a table to the setup function. Here are the default settings:  
 ```lua
 require("scratch").setup({  
-    -- The command to use for opening the scratchpad window.  
-    -- e.g., 'edit', 'split', 'vsplit', 'tabnew'  
-    open_command = "edit",
+    -- How to open the scratchpad. Can be 'float' or a command like
+    -- 'edit', 'split', 'vsplit', 'tabnew'.
+    open_mode = "float",
+
+    -- Configuration for the floating window (only used if open_mode is 'float').
+    float = {
+        relative = 'editor',
+        border = 'rounded',
+        width = 0.8,
+        height = 0.8,
+    },
 
     -- The file extension for your notes.  
     file_extension = "md",
@@ -71,17 +79,21 @@ require("scratch").setup({
 
 ### **Commands**
 
-* :Scratch - Opens the scratchpad for the current day.  
-* :ScratchWeekly - Opens the scratchpad for the current week.  
-* :ScratchMonthly - Opens the scratchpad for the current month.
+* `:Scratch` - Opens a temporary (ephemeral) scratchpad that is not saved to disk.  
+* `:ScratchDaily` - Opens the scratchpad for the current day.  
+* `:ScratchWeekly` - Opens the scratchpad for the current week.  
+* `:ScratchMonthly` - Opens the scratchpad for the current month.
 
 ### **Key Mappings**
 
 You can create your own key mappings for convenience:  
 
 ```lua
+-- Open temporary scratchpad  
+vim.keymap.set("n", "<leader>st", "<cmd>Scratch<cr>", { desc = "Open temporary scratchpad" })
+
 -- Open daily scratchpad  
-vim.keymap.set("n", "<leader>sd", "<cmd>Scratch<cr>", { desc = "Open daily scratchpad" })
+vim.keymap.set("n", "<leader>sd", "<cmd>ScratchDaily<cr>", { desc = "Open daily scratchpad" })
 
 -- Open weekly scratchpad  
 vim.keymap.set("n", "<leader>sw", "<cmd>ScratchWeekly<cr>", { desc = "Open weekly scratchpad" })

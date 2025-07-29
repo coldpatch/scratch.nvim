@@ -16,10 +16,11 @@ CONTENTS                                                 *scratch-contents*
 ==============================================================================
 1. INTRODUCTION                                       *scratch-introduction*
 
-scratch.nvim provides a quick and easy way to open daily, weekly, and
-monthly scratchpads. It's designed to be simple, with flexible storage
+scratch.nvim provides a quick and easy way to open temporary, daily, weekly, 
+and monthly scratchpads. It's designed to be simple, with flexible storage
 options that allow you to keep notes specific to your current project or in a
-single global location.
+single global location. The plugin supports both floating windows and 
+traditional split/edit modes.
 
 ==============================================================================
 2. REQUIREMENTS                                       *scratch-requirements*
@@ -51,11 +52,27 @@ Using packer.nvim: >
 
 Default configuration: >
     require("scratch").setup({
-        open_command = "edit",
+        -- How to open the scratchpad. Can be 'float' or a command like
+        -- 'edit', 'split', 'vsplit', 'tabnew'.
+        open_mode = "float",
+
+        -- Configuration for the floating window (only used if open_mode is 'float').
+        float = {
+            relative = 'editor',
+            border = 'rounded',
+            width = 0.8,
+            height = 0.8,
+        },
+
+        -- The file extension for your notes.
         file_extension = "md",
         storage = {
+            -- If true, store notes in a subdirectory of the current workspace.
+            -- If false, store all notes globally in a single directory.
             use_workspace = true,
+            -- The name of the subdirectory for workspace notes (e.g., '.scratchpad').
             workspace_subdir = ".scratchpad",
+            -- The path for global notes (used when use_workspace is false).
             global_path = vim.fn.stdpath("data") .. "/scratchpad",
         }
     })
@@ -63,8 +80,23 @@ Default configuration: >
 
 Configuration options:
 
-*open_command* (string, default: "edit")
-  The command used to open the scratchpad window (e.g., 'edit', 'split').
+*open_mode* (string, default: "float")
+  How to open the scratchpad. Can be 'float' for a floating window, or a 
+  command like 'edit', 'split', 'vsplit', 'tabnew'.
+
+*float.relative* (string, default: "editor")
+  Positioning relative to the editor window (only used when open_mode is 'float').
+
+*float.border* (string, default: "rounded")
+  Border style for the floating window (only used when open_mode is 'float').
+
+*float.width* (number, default: 0.8)
+  Width of the floating window as a fraction of editor width or absolute pixels
+  (only used when open_mode is 'float').
+
+*float.height* (number, default: 0.8)
+  Height of the floating window as a fraction of editor height or absolute pixels
+  (only used when open_mode is 'float').
 
 *file_extension* (string, default: "md")
   The file extension for note files.
@@ -85,16 +117,20 @@ Configuration options:
 Commands:
 
 :Scratch                                                            *:Scratch*
-  Opens the scratchpad for the current day.
+  Opens a temporary (ephemeral) scratchpad that is not saved to disk.
 
-:ScratchWeekly                                                  *:ScratchWeekly*
-  Opens the scratchpad for the current week (e.g., 2025-W31.md).
+:ScratchDaily                                                  *:ScratchDaily*
+  Opens the scratchpad for the current day (e.g., 29-07-2025.md).
 
-:ScratchMonthly                                                *:ScratchMonthly*
-  Opens the scratchpad for the current month (e.g., 2025-07.md).
+:ScratchWeekly                                                *:ScratchWeekly*
+  Opens the scratchpad for the current week (e.g., W30-2025.md).
+
+:ScratchMonthly                                              *:ScratchMonthly*
+  Opens the scratchpad for the current month (e.g., 07-2025.md).
 
 Example key mappings: >
-    vim.keymap.set("n", "<leader>sd", "<cmd>Scratch<cr>")
+    vim.keymap.set("n", "<leader>st", "<cmd>Scratch<cr>")
+    vim.keymap.set("n", "<leader>sd", "<cmd>ScratchDaily<cr>")
     vim.keymap.set("n", "<leader>sw", "<cmd>ScratchWeekly<cr>")
     vim.keymap.set("n", "<leader>sm", "<cmd>ScratchMonthly<cr>")
 <
